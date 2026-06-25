@@ -1,3 +1,5 @@
+### Link al video demostrativo de la aplicación: [Click Aqui](https://youtu.be/2oo3rJM51SQ)
+
 ## Acerca del Proyecto
 
 Este repositorio contiene la entrega final del curso de **Talento Tech**: **Java Backend**. El proyecto consiste en el desarrollo de una **API RESTful** completa y escalable, diseñada para gestionar el inventario de artículos de una tienda. 
