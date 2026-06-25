@@ -15,16 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.articulos.model.Articulo;
-import com.example.articulos.service.ArticuloService;
+import com.example.articulos.service.ArticuloServiceImpl;
 
+//@CrossOrigin(origins = "*") // Habilitar CORS para React (opcional, dependiendo de tu configuración de frontend)
 @RestController
 @RequestMapping("/api/articulos")
 public class ArticuloController {
 
-    private final ArticuloService articuloService;
+    private final ArticuloServiceImpl articuloService;
 
     @Autowired
-    public ArticuloController(ArticuloService articuloService) {
+    public ArticuloController(ArticuloServiceImpl articuloService) {
         this.articuloService = articuloService;
     }
 
@@ -50,18 +51,11 @@ public class ArticuloController {
 
     // PUT: Modificar artículo
     @PutMapping("/{id}")
-    public ResponseEntity<Articulo> actualizarArticulo(@PathVariable Long id, @RequestBody Articulo articuloDetalles) {
-        Optional<Articulo> articuloExistente = articuloService.obtenerPorId(id);
-        
-        if (articuloExistente.isPresent()) {
-            Articulo articuloAActualizar = articuloExistente.get();
-            articuloAActualizar.setNombre(articuloDetalles.getNombre());
-            articuloAActualizar.setDescripcion(articuloDetalles.getDescripcion());
-            articuloAActualizar.setPrecio(articuloDetalles.getPrecio());
-            
-            return ResponseEntity.ok(articuloService.guardarArticulo(articuloAActualizar));
-        } else {
+    public ResponseEntity<Articulo> actualizarArticulo(@PathVariable Long id, @RequestBody Articulo articulo) {
+        if(articuloService.obtenerPorId(id).isEmpty()){
             return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(articuloService.actualizarArticulo(id, articulo));
         }
     }
 
